@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Categories";
+}
+
+<h2>Postings</h2>
+
+<div class="form-horizontal" data-bind="foreach: categories">
+
+    <div class="col-md-6" data-bind="click: $root.navigateToCategory">
+        <div style="margin-left: 10px" class="panel panel-default clickable">
+            <img data-bind="attr: { src : url }" width="64" height="64"/>
+            <h3 data-bind="text: name"></h3>
+        </div>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script>
+        var Category = function(id, name, url) {
+            this.id = id;
+            this.name = ko.observable(name);
+            this.url = url;
+        };
+
+        var listCategoriesModel = {
+            categories: ko.observableArray(),
+            navigateToCategory: function(category) {
+                window.location.href = "@Url.RouteUrl("ShowCategoryPostings", new {id = "{0}"})".replace("{0}",
+                    category.id);
+            }
+        };
+
+        ko.applyBindings(listCategoriesModel);
+
+
+        $.ajax("@Url.Action("GetCategories", "Postings")",
+            {
+                type: 'POST',
+                traditional: true,
+                headers: { __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() }
+            })
+            .done(function(response) {
+                for (var i = 0; i < response.data.length; i++) {
+                    listCategoriesModel.categories.push(new Category(response.data[i].id,
+                        response.data[i].name,
+                        response.data[i].image.url || "#"));
+                }
+            });
+
+    </script>
+}

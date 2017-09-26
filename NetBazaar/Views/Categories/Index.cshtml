@@ -1,0 +1,120 @@
+﻿@model IEnumerable<NetBazaar.Dalc.Dtos.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Categories</h2>
+<p>
+    <a href="@Url.Action("Create", "Categories")" class="btn btn-default">Create Category</a>
+</p>
+
+<div class="form-horizontal">
+    <div class="row">
+        <label class="control-label  col-md-4">@Html.DisplayNameFor(model => model.Name)</label>
+        <label class="control-label  col-md-4">@Html.DisplayNameFor(model => model.Description)</label>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+<hr/>
+
+<div class="form-horizontal" data-bind="foreach: categories">
+
+    <div class="row">
+        <span class="col-md-4 text-right" data-bind="text: name"></span>
+        <span class="col-md-4 text-right" data-bind="text: description"></span>
+        <div class="col-md-4">
+            <input type="submit" value="Edit" class="btn btn-default" data-bind="click: $root.editCategory"/>
+            <input type="submit" value="Delete" class="btn btn-default" data-bind="click: $root.deleteCategory"/>
+        </div>
+    </div>
+
+    <hr/>
+
+</div>
+
+
+<div class="modal-dialog" id="confirmDeleteDialog" style="display: none">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-bind="click: closeDeleteCategory">&times;</button>
+            <h4 class="modal-title">Delete</h4>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete the category?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-bind="click: closeDeleteCategory">No</button>
+            <button type="button" class="btn btn-default" data-bind="click: confirmDeleteCategory">Yes</button>
+        </div>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script>
+        var Category = function(id, name, description) {
+            this.id = id;
+            this.name = ko.observable(name);
+            this.description = ko.observable(description);
+        };
+
+        var listCategoriesModel = {
+            activeCategory: null,
+            categories: ko.observableArray(),
+            editCategory: function(category) {
+                window.location.href = "@Url.Action("Edit", "Categories")" + "/" + category.id;
+            },
+            deleteCategory: function(category) {
+                listCategoriesModel.activeCategory = category;
+                $("#confirmDeleteDialog").dialog("open");
+            },
+            closeDeleteCategory: function() {
+                $("#confirmDeleteDialog").dialog("close");
+            },
+            confirmDeleteCategory: function() {
+                $.ajax("@Url.Action("DeleteCategory", "Categories")" + "/" + listCategoriesModel.activeCategory.id,
+                    {
+                        type: 'POST',
+                        traditional: true,
+                        headers: { __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() }
+                    })
+                    .done(function(response) {
+                        listCategoriesModel.categories.remove(listCategoriesModel.activeCategory);
+                        $("#confirmDeleteDialog").dialog("close");
+                    });
+            }
+        };
+
+        ko.applyBindings(listCategoriesModel);
+
+
+        $.ajax("@Url.Action("GetCategories", "Categories")",
+            {
+                type: 'POST',
+                traditional: true,
+                headers: { __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() }
+            })
+            .done(function(response) {
+                for (var i = 0; i < response.data.length; i++) {
+                    listCategoriesModel.categories.push(new Category(response.data[i].id,
+                        response.data[i].name,
+                        response.data[i].description));
+                }
+            });
+
+        $(function() {
+
+            $("#confirmDeleteDialog")
+                .dialog({
+                    autoOpen: false,
+                    open: function(event, ui) {
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    }
+                });
+        });
+    </script>
+}

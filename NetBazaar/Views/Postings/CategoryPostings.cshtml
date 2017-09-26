@@ -1,0 +1,52 @@
+﻿<h2 data-bind="text: categoryTitle">Postings</h2>
+<hr/>
+<h3 data-bind="text: categoryDescription">Postings</h3>
+
+<p>
+    <a href="@Url.RouteUrl("CreateCategoryPosting", new { id = ViewBag.CategoryId })" class="btn btn-default">Create CategoryPostings</a>
+</p>
+
+
+<div class="form-horizontal" data-bind="foreach: postings">
+
+    <div class="col-md-6" data-bind="click: $root.navigateToPosting">
+        <div style="margin-left: 10px" class="panel panel-default clickable">
+            <h3 data-bind="text: name"></h3>
+        </div>
+    </div>
+
+</div>
+
+@section scripts
+{
+    <script>
+        var Posting = function(id, name) {
+            this.id = id;
+            this.name = ko.observable(name);
+        };
+
+        var listCategoriesModel = {
+            postings: ko.observableArray(),
+            navigateToPosting: function() {
+                alert("click");
+            }
+        };
+
+        ko.applyBindings(listCategoriesModel);
+
+
+        $.ajax("@Url.Action("GetCategoryPostings", "Postings")",
+            {
+                type: 'POST',
+                traditional: true,
+                headers: { __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() }
+            })
+            .done(function(response) {
+                for (var i = 0; i < response.data.length; i++) {
+                    listCategoriesModel.categories.push(new Posting(response.data[i].id,
+                        response.data[i].name));
+                }
+            });
+
+    </script>
+}

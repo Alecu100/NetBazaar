@@ -1,0 +1,236 @@
+﻿@using NetBazaar.BusinessLogic
+@model NetBazaar.Dalc.Dtos.Category
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Category</h4>
+        <hr/>
+        <div class="form-group">
+
+            <div class="row">
+                <label class="control-label col-md-2">Image</label>
+                <div class="col-md-1">
+                    <label class="btn btn-default btn-file">
+                        Browse
+                        <input type="file" style="display: none;" data-bind="event: { change: function() { imgChanged($element) } }" id="inputImage"/>
+                    </label>
+                </div>
+                <img src="#" class="img-rounded col-md-2" style="padding-bottom: 15px" width="64" height="64" alt="Preview image" id="imgPreview">
+            </div>
+
+            <div class="row">
+                <label class="control-label col-md-2" for="Name">@Html.DisplayNameFor(model => model.Name)</label>
+                <div class="col-md-4">
+                    <input class="form-control text-box single-line" id="Name" name="Name" type="text" data-bind="value: category.name"/>
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                </div>
+
+                <label class="control-label col-md-2" for="Description">@Html.DisplayNameFor(model => model.Description)</label>
+                <div class="col-md-4">
+                    <input class="form-control text-box single-line" id="Description" name="Description" type="text" data-bind="value: category.description"/>
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+        </div>
+
+        <h5>Fields</h5>
+        <hr/>
+
+        <div class="form-horizontal" data-bind="foreach: category.fields">
+
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Name">Name</label>
+                <div class="col-md-3">
+                    <input class="form-control text-box single-line" id="Name" name="Name" type="text" data-bind="value: name"/>
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                </div>
+
+                <label class="control-label col-md-2" for="Type">Type</label>
+                <div class="col-md-3">
+                    <select class="form-control text-box single-line" id="Type" name="Type" data-bind="value: type">
+                        <option value="0">None</option>
+                        <option value="1">Boolean</option>
+                        <option value="2">Text</option>
+                        <option value="3">Integer</option>
+                        <option value="4">Float</option>
+                    </select>
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                </div>
+
+                <div class="col-md-2">
+                    <input type="submit" value="Delete Field" class="btn btn-default" data-bind="click: $root.deleteField"/>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-5">
+                <input type="submit" value="Add Field" class="btn btn-default" data-bind="click: addField"/>
+                <input type="submit" value="Save Category" class="btn btn-default" data-bind="click: saveCategory"/>
+                <a href="@Url.Action("Index", "Categories")" class="btn btn-default">Back to List</a>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var nextId = -1;
+
+        function getNextId() {
+            var currentId = nextId;
+            nextId--;
+            return currentId;
+        }
+
+        var CategoryField = function(id, categoryId, type, name) {
+            this.id = id;
+            this.categoryId = categoryId;
+            this.type = ko.observable(type);
+            this.name = ko.observable(name);
+        };
+        var Category = function(id, name, description) {
+            this.id = id;
+            this.name = ko.observable(name);
+            this.description = ko.observable(description);
+            this.fields = ko.observableArray();
+            this.deletedFields = ko.observableArray();
+        };
+        var editCategoryModel = {
+            category: new Category(0, "", ""),
+            fieldTypes: [
+                { name: "None", Value: 0 }, { name: "Boolean", Value: 1 }, { name: "Text", Value: 2 },
+                { name: "Integer", Value: 3 }, { name: "Decimal", Value: 4 }
+            ],
+            addField: function() {
+                editCategoryModel.category.fields.push(new CategoryField(getNextId(), 0, ""));
+            },
+            deleteField: function(field) {
+                if (field != null) {
+                    editCategoryModel.category.fields.remove(field);
+
+                    if (field.id > 0) {
+                        editCategoryModel.category.deletedFields.push(field);
+                    }
+                }
+            },
+            saveCategory: function() {
+
+                $.ajax("@Url.Action("SaveCategory", "Categories")",
+                    {
+                        data: JSON.stringify(ko.toJS(editCategoryModel.category)),
+                        type: 'POST',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        traditional: true,
+                        headers: { __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() }
+                    })
+                    .done(function(response) {
+                        if (!editCategoryModel.category.image.hasOwnProperty("url")) {
+                            return;
+                        }
+
+                        if (editCategoryModel.category.image.id > 0) {
+                            return;
+                        }
+
+                        var formData = new FormData();
+                        var totalFiles = document.getElementById("inputImage").files.length;
+
+                        formData.append("categoryId", editCategoryModel.category.id);
+
+                        for (var i = 0; i < totalFiles; i++) {
+                            var file = document.getElementById("inputImage").files[i];
+
+                            formData.append("categoryImage", file);
+                        }
+
+                        $.ajax("@Url.Action("SaveCategoryImage", "Categories")",
+                            {
+                                type: "POST",
+                                dataType: "JSON",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                headers: {
+                                    __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val()
+                                }
+                            })
+                            .done(function(response) {
+
+                                editCategoryModel.category.image = response.data;
+                                $('#imgPreview').attr('src', response.data.url);
+                            });
+                    });
+            },
+            imgChanged: function(imageInput) {
+                if (imageInput.files && imageInput.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#imgPreview')
+                            .attr('src', e.target.result)
+                            .width(64)
+                            .height(64);
+                    };
+
+                    reader.readAsDataURL(imageInput.files[0]);
+
+                    editCategoryModel.category.image.id = 0;
+                }
+
+            }
+        };
+
+        ko.applyBindings(editCategoryModel);
+
+
+        $.ajax("@Url.Action("GetCategory", "Categories", new {Id = Request.LastPathPart()})",
+            {
+                type: 'POST',
+                traditional: true,
+                headers: { __RequestVerificationToken: $('input[name=__RequestVerificationToken]').val() }
+            })
+            .done(function(response) {
+                editCategoryModel.category.id = response.data.id;
+                editCategoryModel.category.name(response.data.name);
+                editCategoryModel.category.description(response.data.description);
+
+                if (!response.data.hasOwnProperty("image")) {
+                    return;
+                }
+
+                editCategoryModel.category.image = response.data.image;
+
+                if (response.data.image != null) {
+                    $('#imgPreview')
+                        .attr('src', response.data.image.url)
+                        .width(64)
+                        .height(64);
+                }
+
+                for (var i = 0; i < response.data.fields.length; i++) {
+                    editCategoryModel.category.fields
+                        .push(new CategoryField(response.data.fields[i].id,
+                            response.data.fields[i].categoryId,
+                            response.data.fields[i].type,
+                            response.data.fields[i].name));
+                }
+            });
+    </script>
+}

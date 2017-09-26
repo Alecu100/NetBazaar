@@ -1,0 +1,94 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBazaar", "NetBazaar\NetBazaar.csproj", "{05872F4B-5DAD-460A-AB87-EF17CB785AE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBazaar.Dalc", "NetBazaar.Dalc\NetBazaar.Dalc.csproj", "{2E6A0731-A4CF-4BA6-A299-C27ECE4658BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBazaar.Dalc.Sql", "NetBazaar.Dalc.Sql\NetBazaar.Dalc.Sql.csproj", "{38C769D7-FF3D-4821-A6A3-5C30BD64393B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBazaar.Dalc.Dtos", "NetBazaar.Dalc.Dtos\NetBazaar.Dalc.Dtos.csproj", "{BD5C5C53-8F83-4BD3-A67A-6A8E2255D2E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBazaar.BusinessLogic", "NetBazaar.BusinessLogic\NetBazaar.BusinessLogic.csproj", "{AF9DB933-2316-4C80-A1CC-1394CBCAA77B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBazaar.ViewModels", "NetBazaar.ViewModels\NetBazaar.ViewModels.csproj", "{0BD3AEF4-E539-44C1-B3BF-9E6073083863}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBazaar.Resources", "NetBazaar.Resources\NetBazaar.Resources.csproj", "{EBDA49A2-70EA-45A5-83F6-5BF8686AC85F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBazaar.Dalc.MongoDb", "NetBazaar.Dalc.MongoDb\NetBazaar.Dalc.MongoDb.csproj", "{BE552893-B8BB-4A79-9B8A-825B79B0FA17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05872F4B-5DAD-460A-AB87-EF17CB785AE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05872F4B-5DAD-460A-AB87-EF17CB785AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05872F4B-5DAD-460A-AB87-EF17CB785AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05872F4B-5DAD-460A-AB87-EF17CB785AE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E6A0731-A4CF-4BA6-A299-C27ECE4658BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E6A0731-A4CF-4BA6-A299-C27ECE4658BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E6A0731-A4CF-4BA6-A299-C27ECE4658BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E6A0731-A4CF-4BA6-A299-C27ECE4658BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38C769D7-FF3D-4821-A6A3-5C30BD64393B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38C769D7-FF3D-4821-A6A3-5C30BD64393B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38C769D7-FF3D-4821-A6A3-5C30BD64393B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38C769D7-FF3D-4821-A6A3-5C30BD64393B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD5C5C53-8F83-4BD3-A67A-6A8E2255D2E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD5C5C53-8F83-4BD3-A67A-6A8E2255D2E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD5C5C53-8F83-4BD3-A67A-6A8E2255D2E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD5C5C53-8F83-4BD3-A67A-6A8E2255D2E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF9DB933-2316-4C80-A1CC-1394CBCAA77B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF9DB933-2316-4C80-A1CC-1394CBCAA77B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF9DB933-2316-4C80-A1CC-1394CBCAA77B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF9DB933-2316-4C80-A1CC-1394CBCAA77B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BD3AEF4-E539-44C1-B3BF-9E6073083863}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BD3AEF4-E539-44C1-B3BF-9E6073083863}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BD3AEF4-E539-44C1-B3BF-9E6073083863}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BD3AEF4-E539-44C1-B3BF-9E6073083863}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBDA49A2-70EA-45A5-83F6-5BF8686AC85F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBDA49A2-70EA-45A5-83F6-5BF8686AC85F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBDA49A2-70EA-45A5-83F6-5BF8686AC85F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBDA49A2-70EA-45A5-83F6-5BF8686AC85F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE552893-B8BB-4A79-9B8A-825B79B0FA17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE552893-B8BB-4A79-9B8A-825B79B0FA17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE552893-B8BB-4A79-9B8A-825B79B0FA17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE552893-B8BB-4A79-9B8A-825B79B0FA17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://alecsandru.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = NetBazaar\\NetBazaar.csproj
+		SccProjectName1 = NetBazaar
+		SccLocalPath1 = NetBazaar
+		SccProjectUniqueName2 = NetBazaar.Dalc\\NetBazaar.Dalc.csproj
+		SccProjectName2 = NetBazaar.Dalc
+		SccLocalPath2 = NetBazaar.Dalc
+		SccProjectUniqueName3 = NetBazaar.Dalc.Sql\\NetBazaar.Dalc.Sql.csproj
+		SccProjectName3 = NetBazaar.Dalc.Sql
+		SccLocalPath3 = NetBazaar.Dalc.Sql
+		SccProjectUniqueName4 = NetBazaar.Dalc.Dtos\\NetBazaar.Dalc.Dtos.csproj
+		SccProjectName4 = NetBazaar.Dalc.Dtos
+		SccLocalPath4 = NetBazaar.Dalc.Dtos
+		SccProjectUniqueName5 = NetBazaar.BusinessLogic\\NetBazaar.BusinessLogic.csproj
+		SccProjectName5 = NetBazaar.BusinessLogic
+		SccLocalPath5 = NetBazaar.BusinessLogic
+		SccProjectUniqueName6 = NetBazaar.ViewModels\\NetBazaar.ViewModels.csproj
+		SccProjectName6 = NetBazaar.ViewModels
+		SccLocalPath6 = NetBazaar.ViewModels
+		SccProjectUniqueName7 = NetBazaar.Resources\\NetBazaar.Resources.csproj
+		SccProjectName7 = NetBazaar.Resources
+		SccLocalPath7 = NetBazaar.Resources
+		SccProjectUniqueName8 = NetBazaar.Dalc.MongoDb\\NetBazaar.Dalc.MongoDb.csproj
+		SccProjectName8 = NetBazaar.Dalc.MongoDb
+		SccLocalPath8 = NetBazaar.Dalc.MongoDb
+	EndGlobalSection
+EndGlobal
